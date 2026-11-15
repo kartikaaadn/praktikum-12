@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praktikum Segmentasi Citra</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <main class="container">
+
+        <header class="page-header">
+            <h1>Image Segmentation Lab</h1>
+            <p class="subtitle">
+                Unggah citra, pilih metode segmentasi, lalu amati hasil pemisahan objek.
+            </p>
+        </header>
+
+        <!-- INPUT DAN PENGATURAN SEGMENTASI -->
+        <section class="panel">
+
+            <div class="method-grid">
+
+                <!-- INPUT GAMBAR -->
+                <div class="method-card">
+                    <label for="imageInput">Pilih gambar</label>
+                    <input
+                        type="file"
+                        id="imageInput"
+                        accept="image/png,image/jpeg,image/webp"
+                    >
+                </div>
+
+                <!-- PILIH METODE -->
+                <div class="method-card">
+                    <label for="methodSelect">Metode segmentasi</label>
+                    <select id="methodSelect">
+                        <option value="grayscale">Grayscale</option>
+                        <option value="global" selected>Global Thresholding</option>
+                        <option value="adaptive">Adaptive Mean Thresholding</option>
+                        <option value="otsu">Otsu Thresholding</option>
+                        <option value="hsv">HSV Color Segmentation</option>
+                    </select>
+                </div>
+
+                <!-- PARAMETER GLOBAL -->
+                <div class="method-card" id="globalControls">
+                    <label for="globalThreshold">
+                        Threshold (0–255)
+                    </label>
+                    <input
+                        type="number"
+                        id="globalThreshold"
+                        min="0"
+                        max="255"
+                        value="128"
+                    >
+                </div>
+
+                <!-- PARAMETER ADAPTIVE -->
+                <div class="method-card" id="adaptiveControls" hidden>
+                    <label for="blockSize">Ukuran Area</label>
+                    <select id="blockSize">
+                        <option value="3">3 × 3</option>
+                        <option value="5" selected>5 × 5</option>
+                        <option value="7">7 × 7</option>
+                        <option value="9">9 × 9</option>
+                    </select>
+
+                    <label for="adaptiveC">Konstanta C</label>
+                    <input
+                        type="number"
+                        id="adaptiveC"
+                        min="-20"
+                        max="20"
+                        value="5"
+                    >
+                </div>
+
+                <!-- PARAMETER HSV -->
+                <div class="method-card" id="hsvControls" hidden>
+                    <label for="hueMin">Hue Minimum</label>
+                    <input
+                        type="number"
+                        id="hueMin"
+                        min="0"
+                        max="360"
+                        value="0"
+                    >
+
+                    <label for="hueMax">Hue Maksimum</label>
+                    <input
+                        type="number"
+                        id="hueMax"
+                        min="0"
+                        max="360"
+                        value="60"
+                    >
+
+                    <label for="saturationMin">Saturation Minimum (%)</label>
+                    <input
+                        type="number"
+                        id="saturationMin"
+                        min="0"
+                        max="100"
+                        value="30"
+                    >
+
+                    <label for="valueMin">Value Minimum (%)</label>
+                    <input
+                        type="number"
+                        id="valueMin"
+                        min="0"
+                        max="100"
+                        value="20"
+                    >
+                </div>
+
+                <!-- TOMBOL -->
+                <div class="method-card button-group">
+                    <label>&nbsp;</label>
+                    <button
+                        id="applyButton"
+                        class="button"
+                        type="button"
+                    >
+                        Terapkan Segmentasi
+                    </button>
+
+                    <button
+                        id="resetButton"
+                        class="button secondary"
+                        type="button"
+                    >
+                        Reset
+                    </button>
+                </div>
+
+            </div>
+
+            <p id="imageInfo" class="helper">
+                Belum ada gambar yang dipilih.
+            </p>
+
+        </section>
+
+        <!-- HASIL PENGOLAHAN -->
+        <section class="result-grid">
+
+            <div class="result-card">
+                <h3>Citra Asli</h3>
+
+                <div class="canvas-wrap">
+                    <canvas id="originalCanvas"></canvas>
+                    <span id="originalPlaceholder">
+                        Belum ada gambar
+                    </span>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <h3>Hasil Segmentasi</h3>
+
+                <div class="canvas-wrap">
+                    <canvas id="resultCanvas"></canvas>
+                    <span id="resultPlaceholder">
+                        Hasil akan tampil di sini
+                    </span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- STATUS -->
+        <p id="statusMessage" class="status">
+            Silakan unggah gambar terlebih dahulu.
+        </p>
+
+        <p id="resultDescription" class="helper">
+            Belum ada proses yang dijalankan.
+        </p>
+
+    </main>
+
+    <script type="module" src="js/main.js"></script>
+
+</body>
+</html>
